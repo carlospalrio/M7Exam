@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tauler de Tasques Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .column {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 15px;
+            width: 45%;
+        }
+        h2 {
+            text-align: center;
+            color: #444;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .PENDENTS li {
+            border-left: 3px solid #ffa500;
+        }
+        .FETES li {
+            border-left: 3px solid #4caf50;
+            text-decoration: line-through;
+            color: #888;
+        }
+        .add-task {
+            margin-top: 15px;
+        }
+        .add-task input {
+            width: 70%;
+            padding: 5px;
+        }
+        .add-task button {
+            padding: 5px 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tauler de Tasques</h1>
+    <div class="container">
+        <div class="column PENDENTS">
+            <h2>Pendents</h2>
+            <ul id="pendentsList">
+                <li>Dissenyar la interfície</li>
+                <li>Implementar la funcionalitat bàsica</li>
+                <li>Fer proves d'usabilitat</li>
+            </ul>
+            <div class="add-task">
+                <input type="text" id="newTaskInput" placeholder="Nova tasca">
+                <button id="addTaskBtn">Afegir</button>
+            </div>
+        </div>
+        <div class="column FETES">
+            <h2>Fetes</h2>
+            <ul id="fetesList"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pendentsList = document.getElementById('pendentsList');
+            const fetesList = document.getElementById('fetesList');
+            const newTaskInput = document.getElementById('newTaskInput');
+            const addTaskBtn = document.getElementById('addTaskBtn');
+
+            pendentsList.addEventListener('click', function(e) {
+                if (e.target.tagName === 'LI') {
+                    fetesList.appendChild(e.target);
+                }
+            });
+
+            fetesList.addEventListener('click', function(e) {
+                if (e.target.tagName === 'LI') {
+                    pendentsList.appendChild(e.target);
+                }
+            });
+
+            addTaskBtn.addEventListener('click', function() {
+                const taskText = newTaskInput.value.trim();
+                if (taskText) {
+                    const newTask = document.createElement('li');
+                    newTask.textContent = taskText;
+                    pendentsList.appendChild(newTask);
+                    newTaskInput.value = '';
+                }
+            });
+
+            newTaskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTaskBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
